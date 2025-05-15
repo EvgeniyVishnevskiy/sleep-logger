@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.noom.interview.backend.sleep.enums.SleepQuality;
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.UUID;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class SleepLogResponse {
 
-    private Long id;
+    private UUID id;
 
     private Long userId;
 

@@ -1,5 +1,5 @@
 CREATE TABLE IF NOT EXISTS daily_sleep_log (
-    id UUID as identity PRIMARY KEY,
+    id UUID PRIMARY KEY NOT NULL,
     sleep_start TIMESTAMP NOT NULL,
     sleep_end TIMESTAMP NOT NULL,
     sleep_quality INT NOT NULL,

@@ -20,19 +20,19 @@ public class AvgSleepLogResponse {
     private Long userId;
 
     @JsonFormat(pattern = "MM/dd/yyyy")
-    private LocalDate sleepDateStart;
+    private LocalDate observationRangeDateStart;
 
     @JsonFormat(pattern = "MM/dd/yyyy")
-    private LocalDate sleepDateEnd;
+    private LocalDate observationRangeDateEnd;
 
     @JsonFormat(pattern = "HH:mm")
-    private LocalTime sleepStart;
+    private LocalTime avgSleepStart;
 
     @JsonFormat(pattern = "HH:mm")
-    private LocalTime sleepEnd;
+    private LocalTime avgSleepEnd;
 
     @JsonFormat(pattern = "HH:mm")
-    private LocalTime sleepTime;
+    private LocalTime avgSleepTime;
 
     private Map<SleepQuality, Integer> sleepQualityCount;
 }

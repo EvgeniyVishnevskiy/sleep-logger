@@ -2,11 +2,10 @@ package com.noom.interview.backend.sleep.service;
 
 
 import com.noom.interview.backend.sleep.db.service.DailySleepLogService;
-import com.noom.interview.backend.sleep.domain.DailySleepLog;
+import com.noom.interview.backend.sleep.dto.DailySleepLog;
 import com.noom.interview.backend.sleep.exception.SleepLogAlreadyExistsException;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
-import java.time.temporal.ChronoField;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -27,20 +26,39 @@ public class SaveSleepLog {
         return service.save(dailySleepLog);
     }
 
-    private void checkOverlaps(DailySleepLog dailySleepLog) {
-        List<DailySleepLog> conflictLog = service.findByUserIdAndInterval(dailySleepLog.getUserId(),
-            dailySleepLog.getSleepStart().with(ChronoField.NANO_OF_DAY, LocalTime.MIN.toNanoOfDay()),
-            dailySleepLog.getSleepEnd().with(ChronoField.NANO_OF_DAY, LocalTime.MAX.toNanoOfDay()));
+    void checkOverlaps(DailySleepLog dailySleepLog) {
+        Long userId = dailySleepLog.getUserId();
+        LocalDateTime newLogStart = dailySleepLog.getSleepStart();
+        LocalDateTime newLogEnd = dailySleepLog.getSleepEnd();
+        LocalDateTime queryRangeStart = newLogStart.toLocalDate().atStartOfDay();
+        LocalDateTime queryRangeEnd = newLogEnd.toLocalDate().atTime(LocalTime.MAX);
 
-        LocalDateTime start1 = dailySleepLog.getSleepStart();
-        LocalDateTime end1 = dailySleepLog.getSleepEnd();
+        List<DailySleepLog> potentialConflicts = service.findByUserIdAndInterval(
+          userId,
+          queryRangeStart,
+          queryRangeEnd
+        );
 
-        for(DailySleepLog log : conflictLog) {
-            LocalDateTime start2 = log.getSleepStart();
-            LocalDateTime end2 = log.getSleepEnd();
-            if (!(end1.isBefore(start2) || start1.isAfter(end2)) || (start1.isAfter(start2) && end1.isBefore(end2))) {
-                throw new SleepLogAlreadyExistsException("You already have a log between " + log.getSleepStart() + " and " + log.getSleepEnd());
+        for (DailySleepLog existingLog : potentialConflicts) {
+            if (dailySleepLog.getId() != null && dailySleepLog.getId().equals(existingLog.getId())) {
+                continue;
+            }
+
+            LocalDateTime existingLogStart = existingLog.getSleepStart();
+            LocalDateTime existingLogEnd = existingLog.getSleepEnd();
+
+            boolean newLogEndsStrictlyBeforeExistingStarts = newLogEnd.isBefore(existingLogStart);
+            boolean newLogStartsStrictlyAfterExistingEnds = newLogStart.isAfter(existingLogEnd);
+
+            if (!(newLogEndsStrictlyBeforeExistingStarts || newLogStartsStrictlyAfterExistingEnds)) {
+                throw new SleepLogAlreadyExistsException(
+                  "You already have a log between " +
+                    existingLogStart.toString() + " and " + existingLogEnd.toString() +
+                    ". The conflicting period is " +
+                    newLogStart.toString() + " to " + newLogEnd.toString() + "."
+                );
             }
         }
     }
+
 }

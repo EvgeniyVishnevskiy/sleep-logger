@@ -1,0 +1,51 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.4.4'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.noom.interview.backend'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(21)
+    }
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+
+    //Spring
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation "org.springdoc:springdoc-openapi-starter-webmvc-ui:${springOpenApiVersion}"
+
+    //Lombok
+    compileOnly "org.projectlombok:lombok:${lombokVersion}"
+    annotationProcessor "org.projectlombok:lombok:${lombokVersion}"
+
+    //MapStruct
+    implementation "org.mapstruct:mapstruct:${mapstructVersion}"
+    annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
+
+    //Flyway
+    implementation "org.flywaydb:flyway-core:${flywayVersion}"
+
+    //Postgres
+    runtimeOnly "org.postgresql:postgresql:${postgresqlVersion}"
+    implementation 'org.postgresql:postgresql'
+
+    //Test
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testImplementation "com.h2database:h2:${h2Version}"
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}

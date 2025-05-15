@@ -2,8 +2,8 @@ package com.noom.interview.backend.sleep.service;
 
 
 import com.noom.interview.backend.sleep.db.service.DailySleepLogService;
-import com.noom.interview.backend.sleep.domain.AvgSleepLog;
-import com.noom.interview.backend.sleep.domain.DailySleepLog;
+import com.noom.interview.backend.sleep.dto.AvgSleepLog;
+import com.noom.interview.backend.sleep.dto.DailySleepLog;
 import com.noom.interview.backend.sleep.enums.SleepQuality;
 import java.time.LocalDate;
 import java.time.LocalDateTime;

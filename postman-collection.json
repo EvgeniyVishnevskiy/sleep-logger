@@ -1,0 +1,117 @@
+{
+  "info": {
+    "_postman_id": "7d7c9f85-7060-4a3f-af5a-a5328e6af627",
+    "name": "Sleep Log - Local",
+    "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+    "_exporter_id": "7529904"
+  },
+  "item": [
+    {
+      "name": "Create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "userId",
+            "value": "1",
+            "type": "default"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"sleepDate\": \"05/15/2025\",\r\n    \"sleepStart\": \"23:59\",\r\n    \"sleepEnd\": \"06:11\",\r\n    \"sleepQuality\": \"GOOD\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "localhost:8080/v1/sleeplog"
+      },
+      "response": []
+    },
+    {
+      "name": "LastXDays",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "userId",
+            "value": "1",
+            "type": "default"
+          },
+          {
+            "key": "numberOfDays",
+            "value": "30",
+            "type": "default"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "localhost:8080/v1/sleeplog/last-x-days"
+      },
+      "response": []
+    },
+    {
+      "name": "LastDay",
+      "protocolProfileBehavior": {
+        "disableBodyPruning": true
+      },
+      "request": {
+        "method": "GET",
+        "header": [
+          {
+            "key": "userId",
+            "value": "1",
+            "type": "default"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "localhost:8080/v1/sleeplog"
+      },
+      "response": []
+    },
+    {
+      "name": "Create - Validate error",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "userId",
+            "value": "1",
+            "type": "default"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\r\n    \"sleepDate\": \"05/15/2025\",\r\n    \"sleepStart\": \"21:10\",\r\n    \"sleepQuality\": \"OK\"\r\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        },
+        "url": "localhost:8080/v1/sleeplog"
+      },
+      "response": []
+    }
+  ]
+}

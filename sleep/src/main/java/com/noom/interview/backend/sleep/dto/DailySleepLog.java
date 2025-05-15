@@ -1,4 +1,4 @@
-package com.noom.interview.backend.sleep.domain;
+package com.noom.interview.backend.sleep.dto;
 
 import com.noom.interview.backend.sleep.enums.SleepQuality;
 import java.time.LocalDateTime;

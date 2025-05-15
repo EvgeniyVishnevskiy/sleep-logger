@@ -3,7 +3,7 @@ package com.noom.interview.backend.sleep.db.service;
 
 import com.noom.interview.backend.sleep.db.entity.DailySleepLogEntity;
 import com.noom.interview.backend.sleep.db.repository.DailySleepLogRepository;
-import com.noom.interview.backend.sleep.domain.DailySleepLog;
+import com.noom.interview.backend.sleep.dto.DailySleepLog;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
